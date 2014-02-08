@@ -19,9 +19,8 @@ public class Special {
 
 			@Override
 			public Subscription onSubscribe(Observer<? super T> o) {
-				return obs.subscribe(new Observer<T>() {
-
-					AtomicLong count = new AtomicLong(0);
+				final AtomicLong count = new AtomicLong(0);
+				final Subscription sub = obs.subscribe(new Observer<T>() {
 
 					@Override
 					public void onCompleted() {
@@ -38,6 +37,14 @@ public class Special {
 						count.incrementAndGet();
 					}
 				});
+				return new Subscription() {
+
+					@Override
+					public void unsubscribe() {
+						sub.unsubscribe();
+						action.call(count.get());
+					}
+				};
 			}
 		});
 	}
@@ -119,6 +126,17 @@ public class Special {
 	}
 
 	public static void main(String[] args) {
+		Observable<Integer> c = Observable.range(1, 100);
+		Observable<Integer> c2 = count(c, new Action1<Long>() {
+
+			@Override
+			public void call(Long count) {
+				System.out.println("finished counting " + count);
+			}
+		});
+		long count = c2.count().toBlockingObservable().single();
+		System.out.println("count=" + count);
+
 		Observable<Observable<Long>> o = Observable.from(
 				Observable.interval(1, TimeUnit.SECONDS).take(3), Observable
 						.interval(1, TimeUnit.SECONDS).take(1));
