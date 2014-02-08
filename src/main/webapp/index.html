@@ -1,0 +1,41 @@
+
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Viewer</title>
+<script type="text/javascript" charset="utf-8" src="js/jquery-1.3.2.js"></script>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+<script type="text/javascript">
+	
+	$(document).ready(
+			function() {
+			    var keepScrolling = true;
+				var ws = new WebSocket("ws://localhost:8080/view?host=mariweb&port=9010&contains=503615000");
+				ws.onopen = function(event) {
+					
+				}
+				ws.onmessage = function(event) {
+					setTimeout(function() {
+					var text = $('#messages');
+					text.append("\n" + event.data);
+					if (keepScrolling)
+					    window.scrollBy(0, 100000000000000000);
+				  },0);
+				}
+				ws.onclose = function(event) {
+					
+				}
+				$('#messages').click(function(e) {
+					setTimeout(function() {
+					    console.log("clicked");
+					    keepScrolling = !keepScrolling;
+					},0);
+				});
+
+			});
+</script>
+</head>
+<body>
+	<pre id="messages"></pre>
+</body>
+</html>
