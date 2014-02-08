@@ -1,5 +1,7 @@
 package com.github.davidmoten.websocket;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.websocket.WebSocket;
@@ -10,6 +12,7 @@ import rx.Observable.OnSubscribeFunc;
 import rx.Observer;
 import rx.Subscription;
 import rx.util.Range;
+import rx.util.functions.Action1;
 import rx.util.functions.Func1;
 
 public class ViewerServlet extends WebSocketServlet {
@@ -46,5 +49,16 @@ public class ViewerServlet extends WebSocketServlet {
 						+ " this a longish log message similar in length to many typical log lines";
 			}
 		});
+	}
+
+	public static void main(String[] args) {
+		Observable.interval(500, TimeUnit.MILLISECONDS).subscribe(
+				new Action1<Long>() {
+
+					@Override
+					public void call(Long t1) {
+						System.out.println("boo");
+					}
+				});
 	}
 }
