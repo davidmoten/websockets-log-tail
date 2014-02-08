@@ -11,30 +11,58 @@ import rx.Subscription;
 import rx.util.functions.Action0;
 import rx.util.functions.Action1;
 
-public class Special {
+public class RxUtil {
+
+	public static <T> Observable<Observable<T>> doWhenAllComplete(
+			final Observable<Observable<T>> original, Action0 action) {
+		final Counter counter = new Counter(action);
+		final Observable<Observable<T>> countedOriginal = count(original,
+				new Action1<Long>() {
+
+					@Override
+					public void call(Long count) {
+						counter.majorComplete(count);
+					}
+				});
+		return Observable.create(new OnSubscribeFunc<Observable<T>>() {
+
+			@Override
+			public Subscription onSubscribe(
+					final Observer<? super Observable<T>> o) {
+
+				Subscription subscription = countedOriginal
+						.subscribe(createObserver(counter, o));
+
+				return subscription;
+			}
+
+		});
+	}
 
 	public static <T> Observable<T> count(final Observable<T> obs,
 			final Action1<Long> action) {
 		return Observable.create(new OnSubscribeFunc<T>() {
 
 			@Override
-			public Subscription onSubscribe(Observer<? super T> o) {
+			public Subscription onSubscribe(final Observer<? super T> o) {
 				final AtomicLong count = new AtomicLong(0);
 				final Subscription sub = obs.subscribe(new Observer<T>() {
 
 					@Override
 					public void onCompleted() {
 						action.call(count.get());
+						o.onCompleted();
 					}
 
 					@Override
 					public void onError(Throwable e) {
-
+						o.onError(e);
 					}
 
 					@Override
-					public void onNext(T args) {
+					public void onNext(T t) {
 						count.incrementAndGet();
+						o.onNext(t);
 					}
 				});
 				return new Subscription() {
@@ -70,32 +98,6 @@ public class Special {
 				action.call();
 			}
 		}
-	}
-
-	public static <T> Observable<Observable<T>> doWhenAllComplete(
-			final Observable<Observable<T>> original, Action0 action) {
-		final Counter counter = new Counter(action);
-		final Observable<Observable<T>> countedOriginal = count(original,
-				new Action1<Long>() {
-
-					@Override
-					public void call(Long count) {
-						counter.majorComplete(count);
-					}
-				});
-		return Observable.create(new OnSubscribeFunc<Observable<T>>() {
-
-			@Override
-			public Subscription onSubscribe(
-					final Observer<? super Observable<T>> o) {
-
-				Subscription subscription = countedOriginal
-						.subscribe(createObserver(counter, o));
-
-				return subscription;
-			}
-
-		});
 	}
 
 	private static <T> Observer<Observable<T>> createObserver(
