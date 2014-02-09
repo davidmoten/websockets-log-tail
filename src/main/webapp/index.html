@@ -19,7 +19,7 @@ $(function() {
       text.append(event.data + "\n");
       if (keepScrolling)
         window.scrollBy(0, 100000000000000000);
-    },0);
+      },0);
   }
   ws.onclose = function(event) {
     
@@ -28,7 +28,7 @@ $(function() {
       if (event.keyCode == 32)
         setTimeout(function() {
             keepScrolling = !keepScrolling;
-        },0);
+          },0);
   });
 });
 </script>
