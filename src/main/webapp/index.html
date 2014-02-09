@@ -16,7 +16,7 @@ $(function() {
   ws.onmessage = function(event) {
     setTimeout(function() {
       var text = $('#messages');
-      text.append("\n" + event.data);
+      text.append(event.data + "\n");
       if (keepScrolling)
         window.scrollBy(0, 100000000000000000);
     },0);
