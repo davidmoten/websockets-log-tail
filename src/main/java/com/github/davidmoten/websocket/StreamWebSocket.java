@@ -29,6 +29,7 @@ public class StreamWebSocket implements WebSocket {
 
 	@Override
 	public void onClose(int closeCode, String message) {
+		System.out.println("unsubscribing");
 		subscription.unsubscribe();
 	}
 
