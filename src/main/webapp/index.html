@@ -8,6 +8,7 @@
 <script type="text/javascript">
   
 $(function() {
+  var text = $('#messages');
   var keepScrolling = true;
   var ws = new WebSocket("ws://localhost:8080/view?host=mariweb&port=9010&contains=503615000");
   ws.onopen = function(event) {
@@ -15,7 +16,6 @@ $(function() {
   };
   ws.onmessage = function(event) {
     setTimeout(function() {
-      var text = $('#messages');
       text.append(event.data + "\n");
       if (keepScrolling)
         window.scrollBy(0, 100000000000000000);
