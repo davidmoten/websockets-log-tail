@@ -14,10 +14,10 @@ $(function() {
     
   };
   ws.onmessage = function(event) {
-        setTimeout(function() {
-    var text = $('#messages');
-    text.append("\n" + event.data);
-    if (keepScrolling)
+    setTimeout(function() {
+      var text = $('#messages');
+      text.append("\n" + event.data);
+      if (keepScrolling)
         window.scrollBy(0, 100000000000000000);
     },0);
   }
@@ -26,10 +26,10 @@ $(function() {
   }
   $(document).bind("keydown", function(event){
       if (event.keyCode == 32)
-      setTimeout(function() {
-          console.log("clicked");
-          keepScrolling = !keepScrolling;
-      },0);
+        setTimeout(function() {
+            console.log("clicked");
+            keepScrolling = !keepScrolling;
+        },0);
   });
 });
 </script>
