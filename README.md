@@ -1,7 +1,7 @@
 websockets-log-tail
 ===================
 
-Follow a stream from a server in the browser (like a log file).
+Follow a stream from a server in an HTML5 compatible browser (like tailing a log file).
 
 Status: *pre-alpha*
 
