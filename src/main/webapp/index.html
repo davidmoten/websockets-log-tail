@@ -16,19 +16,19 @@ $(function() {
   };
   ws.onmessage = function(event) {
     setTimeout(function() {
-      text.append(event.data + "\n");
-      if (keepScrolling)
-        window.scrollBy(0, 100000000000000000);
+        text.append(event.data + "\n");
+        if (keepScrolling)
+          window.scrollBy(0, 100000000000000000);
       },0);
   }
   ws.onclose = function(event) {
     
   }
   $(document).bind("keydown", function(event){
-      if (event.keyCode == 32)
-        setTimeout(function() {
-            keepScrolling = !keepScrolling;
-          },0);
+    if (event.keyCode == 32)
+      setTimeout(function() {
+          keepScrolling = !keepScrolling;
+        },0);
   });
 });
 </script>
