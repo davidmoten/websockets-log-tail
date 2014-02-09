@@ -29,3 +29,10 @@ artifacts and their dependencies. [RxJava](https://github.com/Netflix/RxJava/wik
 is a great addition to a streaming solution because it simplifies cancelling 
 subscriptions and enables functional transformations (and all the other superb 
 RxJava goodness like retries, timeouts, caching, multicast, and a heap more). 
+
+The code in this project is super simple and brief thanks to jetty libraries.
+
+* [ViewerServlet](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/java/com/github/davidmoten/websocket/ViewerServlet.java) 
+* [StreamWebSocket](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/java/com/github/davidmoten/websocket/StreamWebSocket.java)
+* [web.xml](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/webapp/WEB-INF/web.xml)
+* [index.html](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/webapp/index.html)
