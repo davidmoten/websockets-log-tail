@@ -21,7 +21,6 @@ public class StreamWebSocket implements WebSocket {
 
 	public void onMessage(String message) {
 		try {
-			System.out.println("sending " + message);
 			connection.sendMessage(message);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
