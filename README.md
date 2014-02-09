@@ -24,5 +24,8 @@ Go to [http://localhost:8080](http://localhost:8080).
 
 Technical details
 ---------------------
-This demo has dependencies on *jetty-websocket* and *jetty-server* artifacts and their dependencies. 
-
+This demo has dependencies on *rx-java-core*, *jetty-websocket* and *jetty-server* 
+artifacts and their dependencies. [RxJava](https://github.com/Netflix/RxJava/wiki) 
+is a great addition to a streaming solution because it simplifies cancelling 
+subscriptions and enables functional transformations (and all the other superb 
+RxJava goodness like retries, timeouts, caching, multicast, and a heap more). 
