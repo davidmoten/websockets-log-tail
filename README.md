@@ -24,5 +24,5 @@ Go to [http://localhost:8080](http://localhost:8080).
 
 Technical details
 ---------------------
-This demo has dependencies on jetty-websocket and jetty-server artifacts and their dependencies. 
+This demo has dependencies on *jetty-websocket* and *jetty-server* artifacts and their dependencies. 
 
