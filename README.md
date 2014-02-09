@@ -34,7 +34,7 @@ The code in this project is super simple and brief thanks to jetty libraries.
 
 * [index.html](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/webapp/index.html) - calls `ViewerServlet` as an html5 websocket service
 * [web.xml](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/webapp/WEB-INF/web.xml) - defines url for `ViewerServlet`
-* [ViewerServlet](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/java/com/github/davidmoten/websocket/ViewerServlet.java) - implements jetty `WebSocketServlet.doWebSocketConnect` and returns a `StreamWebSocket`
+* [ViewerServlet](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/java/com/github/davidmoten/websocket/ViewerServlet.java) - implements jetty `WebSocketServlet.doWebSocketConnect()` and returns a `StreamWebSocket`
 * [StreamWebSocket](https://github.com/davidmoten/websockets-log-tail/blob/master/src/main/java/com/github/davidmoten/websocket/StreamWebSocket.java) - implements jetty `WebSocket`, starts and stops streaming to browser
 
 
