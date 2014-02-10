@@ -19,7 +19,7 @@
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>Tailer</servlet-name>
+    <servlet-name>Tail</servlet-name>
     <url-pattern>/tail</url-pattern>
   </servlet-mapping>
 
