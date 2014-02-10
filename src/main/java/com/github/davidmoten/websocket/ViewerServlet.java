@@ -15,11 +15,11 @@ public class ViewerServlet extends WebSocketServlet {
 
 	@Override
 	public WebSocket doWebSocketConnect(HttpServletRequest req, String protocol) {
-		Observable<?> stream = createObservable();
+		Observable<?> stream = createDummyStream();
 		return new StreamWebSocket(stream);
 	}
 
-	private Observable<String> createObservable() {
+	private Observable<String> createDummyStream() {
 		return Observable.interval(100, TimeUnit.MILLISECONDS).map(toMessage());
 	}
 
