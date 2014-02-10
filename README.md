@@ -20,7 +20,9 @@ Run the demo
     cd websockets-log-tail
     mvn test jetty:run
     
-Go to [http://localhost:8080](http://localhost:8080).
+Go to [http://localhost:8080](http://localhost:8080)
+
+or to view a tail of /var/log/syslog: [http://localhost:8080/?tail=true](http://localhost:8080/?tail=true).
 
 Technical details
 ---------------------

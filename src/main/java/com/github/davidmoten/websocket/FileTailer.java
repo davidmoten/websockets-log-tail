@@ -20,7 +20,7 @@ public class FileTailer {
 		this.file = file;
 	}
 
-	public Observable<String> getStream(int numBytes, final long pollIntervalMs) {
+	public Observable<String> getStream(final long pollIntervalMs) {
 		return Observable.create(new OnSubscribeFunc<String>() {
 
 			@Override
@@ -38,6 +38,12 @@ public class FileTailer {
 	private TailerListenerAdapter createListener(
 			final Observer<? super String> observer) {
 		return new TailerListenerAdapter() {
+
+			@Override
+			public void fileRotated() {
+				// ignore, just keep tailing
+			}
+
 			@Override
 			public void handle(String line) {
 				observer.onNext(line);

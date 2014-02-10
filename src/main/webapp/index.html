@@ -7,10 +7,21 @@
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <script type="text/javascript">
   
+function getUrlParameter(name) {
+	return decodeURIComponent((RegExp(name + '=' + '([^&]*)(&|$)').exec(
+			location.search) || [ , null ])[1]);
+}
+
 $(function() {
   var text = $('#messages');
   var keepScrolling = true;
-  var ws = new WebSocket("ws://localhost:8080/view?host=mariweb&port=9010&contains=503615000");
+  var isTail = getUrlParameter("tail")=="true";
+  var path;
+  if (isTail) 
+    path = "tail";
+  else 
+    path = "view";
+  var ws = new WebSocket("ws://localhost:8080/"+ path);
   ws.onopen = function(event) {
     
   };

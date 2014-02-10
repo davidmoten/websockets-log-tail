@@ -15,7 +15,7 @@ public class FileTailerServlet extends WebSocketServlet {
 	public WebSocket doWebSocketConnect(HttpServletRequest request,
 			String protocol) {
 		FileTailer tailer = new FileTailer(new File("/var/log/syslog"));
-		return new StreamWebSocket(tailer.getStream(10000, 1000));
+		return new StreamWebSocket(tailer.getStream(1000));
 	}
 
 }
