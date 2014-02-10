@@ -12,6 +12,16 @@
     <servlet-name>View</servlet-name>
     <url-pattern>/view</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Tail</servlet-name>
+    <servlet-class>com.github.davidmoten.websocket.FileTailerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Tailer</servlet-name>
+    <url-pattern>/tail</url-pattern>
+  </servlet-mapping>
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

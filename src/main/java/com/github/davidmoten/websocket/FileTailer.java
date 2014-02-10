@@ -20,14 +20,14 @@ public class FileTailer {
 		this.file = file;
 	}
 
-	public Observable<String> getStream(int numBytes) {
+	public Observable<String> getStream(int numBytes, final long pollIntervalMs) {
 		return Observable.create(new OnSubscribeFunc<String>() {
 
 			@Override
 			public Subscription onSubscribe(
 					final Observer<? super String> observer) {
 				TailerListener listener = createListener(observer);
-				final Tailer tailer = new Tailer(file, listener, 1000);
+				final Tailer tailer = new Tailer(file, listener, pollIntervalMs);
 				Thread t = new Thread(createRunnable(observer, tailer));
 				t.start();
 				return createSubscription(tailer);
