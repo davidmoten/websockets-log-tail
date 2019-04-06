@@ -6,89 +6,60 @@ import java.io.FileNotFoundException;
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListener;
 import org.apache.commons.io.input.TailerListenerAdapter;
+import org.reactivestreams.Subscription;
 
-import rx.Observable;
-import rx.Observable.OnSubscribeFunc;
-import rx.Observer;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 
 public class FileTailer {
 
-	private final File file;
+    private final File file;
 
-	public FileTailer(File file) {
-		this.file = file;
-	}
+    public FileTailer(File file) {
+        this.file = file;
+    }
 
-	public Observable<String> getStream(final long pollIntervalMs) {
-		return Observable.create(new OnSubscribeFunc<String>() {
-
-			@Override
-			public Subscription onSubscribe(
-					final Observer<? super String> observer) {
-				TailerListener listener = createListener(observer);
-				final Tailer tailer = new Tailer(file, listener, pollIntervalMs);
-				Thread t = new Thread(createRunnable(observer, tailer));
-				t.start();
-				return createSubscription(tailer);
-			}
-		});
-	}
-
-	private TailerListenerAdapter createListener(
-			final Observer<? super String> observer) {
-		return new TailerListenerAdapter() {
-
-			@Override
-			public void fileRotated() {
-				// ignore, just keep tailing
-			}
-
-			@Override
-			public void handle(String line) {
-				observer.onNext(line);
-			}
-
-			@Override
-			public void fileNotFound() {
-				observer.onError(new FileNotFoundException(file.toString()));
-			}
-
-			@Override
-			public void handle(Exception ex) {
-				observer.onError(ex);
-			}
-		};
-	}
-
-	private Runnable createRunnable(final Observer<? super String> observer,
-			final Tailer tailer) {
-		return new Runnable() {
-			@Override
-			public void run() {
-				try {
-					tailer.run();
-				} catch (Exception e) {
-					observer.onError(e);
-				}
-			}
-		};
-	}
-
-	private Subscription createSubscription(final Tailer tailer) {
-		return new Subscription() {
-		    volatile boolean cancelled;
-		    
-			@Override
-			public void unsubscribe() {
-			    cancelled = true;
-				tailer.stop();
-			}
+    public Observable<String> getStream(final long pollIntervalMs) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
 
             @Override
-            public boolean isUnsubscribed() {
-                return cancelled;
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                TailerListener listener = createListener(emitter);
+                final Tailer tailer = new Tailer(file, listener, pollIntervalMs);
+                try {
+                    tailer.run();
+                } catch (Throwable e) {
+                    emitter.onError(e);
+                }
             }
-		};
-	}
+        });
+    }
+
+    private TailerListenerAdapter createListener(final ObservableEmitter<String> emitter) {
+        return new TailerListenerAdapter() {
+
+            @Override
+            public void fileRotated() {
+                // ignore, just keep tailing
+            }
+
+            @Override
+            public void handle(String line) {
+                emitter.onNext(line);
+            }
+
+            @Override
+            public void fileNotFound() {
+                emitter.onError(new FileNotFoundException(file.toString()));
+            }
+
+            @Override
+            public void handle(Exception ex) {
+                emitter.onError(ex);
+            }
+        };
+    }
+
 }

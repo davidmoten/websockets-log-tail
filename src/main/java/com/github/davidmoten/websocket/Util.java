@@ -2,8 +2,8 @@ package com.github.davidmoten.websocket;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 class Util {
 
@@ -11,11 +11,11 @@ class Util {
 		return Observable.interval(100, TimeUnit.MILLISECONDS).map(toMessage());
 	}
 
-	static Func1<Long, String> toMessage() {
-		return new Func1<Long, String>() {
+	static Function<Long, String> toMessage() {
+		return new Function<Long, String>() {
 
 			@Override
-			public String call(Long i) {
+			public String apply(Long i) {
 				return i
 						+ " this a longish log message similar in length to many typical log lines";
 			}
