@@ -77,10 +77,18 @@ public class FileTailer {
 
 	private Subscription createSubscription(final Tailer tailer) {
 		return new Subscription() {
+		    volatile boolean cancelled;
+		    
 			@Override
 			public void unsubscribe() {
+			    cancelled = true;
 				tailer.stop();
 			}
+
+            @Override
+            public boolean isUnsubscribed() {
+                return cancelled;
+            }
 		};
 	}
 }

@@ -6,7 +6,7 @@ import org.eclipse.jetty.websocket.WebSocket;
 
 import rx.Observable;
 import rx.Subscription;
-import rx.util.functions.Action1;
+import rx.functions.Action1;
 
 public class StreamWebSocket implements WebSocket {
 

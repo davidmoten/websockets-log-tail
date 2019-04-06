@@ -3,7 +3,7 @@ package com.github.davidmoten.websocket;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.util.functions.Func1;
+import rx.functions.Func1;
 
 class Util {
 
