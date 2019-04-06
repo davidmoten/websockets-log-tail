@@ -3,7 +3,7 @@ websockets-log-tail
 
 Follow a stream from a server in an HTML5 compatible browser (like tailing a log file).
 
-Status: *pre-alpha*
+Status: *beta*
 
 This project holds demonstration java source code that uses 
 websockets to send a sample stream of 10 lines of text a second
@@ -26,7 +26,7 @@ or to view a tail of /var/log/syslog: [http://localhost:8080/?tail=true](http://
 
 Technical details
 ---------------------
-This demo has dependencies on *rxjava-core*, *jetty-websocket* and *jetty-server* 
+This demo has dependencies on *RxJava* 2.x, *jetty-websocket* and *jetty-server* 
 artifacts and their dependencies. [RxJava](https://github.com/Netflix/RxJava/wiki) 
 is a great addition to a streaming solution because it simplifies cancelling 
 subscriptions and enables functional transformations (and all the other superb 
